@@ -11,6 +11,7 @@ var humidityRateEl = document.querySelector('#humidityRate');
 var fiveDayCardsEl = document.querySelector('#fiveDayCards');
 var searchHistoryEl = document.querySelector('#searchHistory');
 var searchBtnEl = document.querySelector('#searchBtn');
+var globalBtn = $('<button>');
 
 // function to actually search the city's weather
 function searchFunction() {
@@ -19,7 +20,7 @@ function searchFunction() {
   
     if (!cityEnteredEl.val()) {alert('Invalid Input');} 
     else {
-      getLocation(cityEnteredEl.val())
+      cityData(cityEnteredEl.val())
         .then(function (data) {
           var latitude = data[0].lat;
           var longitude = data[0].lon;
@@ -72,7 +73,7 @@ function weatherData(val) {
     for (var i = 7; i <= val.list.length; i += 8) {
 
         var fiveDays = $("<div>");
-        var fiveDaysWeather = $("<h5>");
+        var fiveDaysWeather = $("<h6>");
         var fiveDaysTemp = $("<div>");
         var fiveDaysWind = $("<div>");
         var fiveDaysHumidity = $("<div>");
@@ -93,9 +94,9 @@ function weatherData(val) {
           alt: `${val.list[i].weather[0].description}`});
     
 
-        fiveDays.addClass("fiveDayWeather-card col");
-        fiveDaysWeather.addClass("fiveDayWeather-date m-2");
-        fiveDaysPng.addClass("fiveDayWeather-icon");
+        fiveDays.addClass("fiveDayWeather col");
+        fiveDaysWeather.addClass("fiveDayWeatherDate m-2");
+        fiveDaysPng.addClass("fiveDayWeatherPng");
     
         fiveDayCardsEl.append(fiveDays);
         fiveDays.append(fiveDaysWeather);
@@ -111,12 +112,10 @@ var previousSearches = JSON.parse(localStorage.getItem('Previous Searches'));
 
 for (i = 0; i < previousSearches.length; i++) {
 
-  let city = $('<button>');
-
   if (previousSearches[i]) {
-    city.text(previousSearches[i]);
-    city.addClass('searchHistoryBtn');
-    searchHistoryEl.append(city);
+    globalBtn.text(previousSearches[i]);
+    globalBtn.addClass('searchHistoryBtn');
+    searchHistoryEl.append(globalBtn);
     $('.searchHistoryBtn').on('click', searchHistoryBtn);
   }
 }
@@ -124,13 +123,11 @@ for (i = 0; i < previousSearches.length; i++) {
 // Function to save search history
 function saveSearchHistory(desiredCity) {
 
-    let city = $('<button>');
-
     previousSearches.unshift(desiredCity);
     localStorage.setItem('Previous Searches', JSON.stringify(previousSearches));
-    city.text(desiredCity);
-    city.addClass('searchHistoryBtn');
-    searchHistoryEl.prepend(city);
+    globalBtn.text(desiredCity);
+    globalBtn.addClass('searchHistoryBtn');
+    searchHistoryEl.prepend(globalBtn);
     $('.searchHistoryBtn').on('click', searchHistoryBtn);
   }
 
