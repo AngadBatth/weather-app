@@ -86,3 +86,30 @@ function weatherData(val) {
         fiveDays.append(fiveDaysHumidity);
       }
 }
+
+// Put all searches into Local storage and add new buttons under search history with searched city's name
+var previousSearches = JSON.parse(localStorage.getItem('Previous Searches'));
+
+for (i = 0; i < previousSearches.length; i++) {
+
+  let city = $('<button>');
+
+  if (previousSearches[i]) {
+    city.text(previousSearches[i]);
+    city.addClass('searchHistoryBtn');
+    searchHistoryEl.append(city);
+    $('.searchHistoryBtn').on('click', searchHistoryBtn);
+  }
+}
+
+// Function to save search history
+function saveSearchHistory(desiredCity) {
+
+    previousSearches.unshift(desiredCity);
+    localStorage.setItem('Previous Searches', JSON.stringify(previousSearches));
+    let city = $('<button>');
+    city.text(desiredCity);
+    city.addClass('searchHistoryBtn');
+    searchHistoryEl.prepend(city);
+    $('.searchHistoryBtn').on('click', searchHistoryBtn);
+  }
