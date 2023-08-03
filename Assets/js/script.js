@@ -2,6 +2,7 @@
 const apiKey = '3630deb268097bac1f6b9fffc4749e5e'
 
 // DOM Elements
+var cityEnteredEl = document.querySelector('#cityEntered');
 var cityNameEl = document.querySelector('#cityName');
 var weatherConditionEl = document.querySelector('#weatherCondition');
 var temperatureEl = document.querySelector('#temperature');
@@ -9,6 +10,24 @@ var windConditionEl = document.querySelector('#windCondition');
 var humidityRateEl = document.querySelector('#humidityRate');
 var fiveDayCardsEl = document.querySelector('#fiveDayCards');
 var searchHistoryEl = document.querySelector('#searchHistory');
+var searchBtnEl = document.querySelector('#searchBtn');
+
+// function to actually search the city's weather
+function searchFunction() {
+
+    saveSearchHistory(cityEnteredEl.val());
+  
+    if (!cityEnteredEl.val()) {alert('Invalid Input');} 
+    else {
+      getLocation(cityEnteredEl.val())
+        .then(function (data) {
+          var latitude = data[0].lat;
+          var longitude = data[0].lon;
+          return weatherData(latitude, longitude);})
+        .then(function (result) {weatherData(result);});}
+  
+    cityEnteredEl.val('');
+  }
 
 // Function to retrieve City Data using the name of city
 function cityData(nameOfCity) {
@@ -105,11 +124,27 @@ for (i = 0; i < previousSearches.length; i++) {
 // Function to save search history
 function saveSearchHistory(desiredCity) {
 
+    let city = $('<button>');
+
     previousSearches.unshift(desiredCity);
     localStorage.setItem('Previous Searches', JSON.stringify(previousSearches));
-    let city = $('<button>');
     city.text(desiredCity);
     city.addClass('searchHistoryBtn');
     searchHistoryEl.prepend(city);
     $('.searchHistoryBtn').on('click', searchHistoryBtn);
   }
+
+  // function to retrieve data from previously searched cities
+  function searchHistoryBtn() {
+
+    cityData($(this).text())
+      .then(function (data) {
+        var latitude = data[0].lat;
+        var longitude = data[0].lon;
+        return cityWeather(latitude, longitude); })
+
+      .then(function (result) {
+        weatherData(result); });
+  }
+
+  searchBtnEl.on('click', searchFunction);
