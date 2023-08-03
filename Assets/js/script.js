@@ -60,11 +60,11 @@ function weatherData(val) {
         alt: `${val.list[0].weather[0].description}`});
 
 
-    temperatureEl.text(val.list[0].main.temperature + '°C');
+    temperatureEl.text(val.list[0].main.temp + '°C');
 
-    windConditionEl.text(val.list[0].wind.windCondition + 'm/s');
+    windConditionEl.text(val.list[0].wind.speed + 'm/s');
 
-    humidityRateEl.text(val.list[0].main.humidityRate + '%');
+    humidityRateEl.text(val.list[0].main.humidity + '%');
 
     fiveDayCardsEl.innerHTML('');
 
@@ -72,7 +72,7 @@ function weatherData(val) {
     for (var i = 7; i <= val.list.length; i += 8) {
 
         var fiveDays = $("<div>");
-        var fiveDaysWeather = $("<h4>");
+        var fiveDaysWeather = $("<h5>");
         var fiveDaysTemp = $("<div>");
         var fiveDaysWind = $("<div>");
         var fiveDaysHumidity = $("<div>");
