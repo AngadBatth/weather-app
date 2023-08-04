@@ -53,10 +53,10 @@ function weatherData(val) {
 
     cityNameEl.innerHTML = val.name;
 
-    // weatherConditionEl.attr({
+    // weatherConditionEl.setAttribute({
 
-    //     src: `https://openweathermap.org/img/wn/${val.list[0].weather[0].icon}@2x.png`,
-    //     alt: `${val.list[0].weather[0].description}`});
+    //     src: `https://openweathermap.org/img/wn/${val.weather.icon}@2x.png`,
+    //     alt: `${val.weather.description}`});
 
 
     temperatureEl.innerHTML = val.main.temp + '°C';
@@ -87,9 +87,9 @@ function weatherData(val) {
     //     fiveDaysHumidity.text("Humidity: " + val.list[i].main.humidity + "%");
 
 
-    //     fiveDaysPng.attr({
-    //       src: `https://openweathermap.org/img/wn/${val.list[i].weather[0].icon}@2x.png`,
-    //       alt: `${val.list[i].weather[0].description}`});
+    //     fiveDaysPng.setAttribute({
+    //       src: `https://openweathermap.org/img/wn/${val.weather.icon}@2x.png`,
+    //       alt: `${val.weather.description}`});
     
 
     //     fiveDays.addClass("fiveDayWeather col");
