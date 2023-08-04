@@ -16,24 +16,20 @@ var globalBtn = $('<button>');
 // function to actually search the city's weather
 function searchFunction() {
 
-    saveSearchHistory(cityEnteredEl.val());
+    saveSearchHistory(cityEnteredEl.value);
   
-    if (!cityEnteredEl.val()) {alert('Invalid Input');} 
+    if (!cityEnteredEl.value) {alert('Invalid Input');} 
     else {
-      cityData(cityEnteredEl.val())
+      cityData(cityEnteredEl.value)
         .then(function (data) {
-          var latitude = data[0].lat;
-          var longitude = data[0].lon;
-          return weatherData(latitude, longitude);})
-        .then(function (result) {weatherData(result);});}
-  
-    cityEnteredEl.val('');
+          return weatherData(data);})
+    }
   }
 
 // Function to retrieve City Data using the name of city
 function cityData(nameOfCity) {
 
-    return fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${nameOfCity}&appid=${apiKey}&limit=2`)
+    return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${nameOfCity}&appid=${apiKey}`)
     .then(function (response) {
         return response.json(); })
     .then(function (data) {
@@ -53,82 +49,90 @@ function cityWeather(latitude, longitude) {
 // Function to fill page with Weather Data
 function weatherData(val) {
 
-    cityNameEl.text(val.nameOfCity + ' ' + val.list[0].dt_txt.slice(0,10));
+  console.log(val);
 
-    weatherConditionEl.attr({
+    cityNameEl.innerHTML = val.name;
 
-        src: `https://openweathermap.org/img/wn/${val.list[0].weather[0].icon}@2x.png`,
-        alt: `${val.list[0].weather[0].description}`});
+    // weatherConditionEl.attr({
+
+    //     src: `https://openweathermap.org/img/wn/${val.list[0].weather[0].icon}@2x.png`,
+    //     alt: `${val.list[0].weather[0].description}`});
 
 
-    temperatureEl.text(val.list[0].main.temp + '°C');
+    temperatureEl.innerHTML = val.main.temp + '°C';
 
-    windConditionEl.text(val.list[0].wind.speed + 'm/s');
+    windConditionEl.innerHTML = val.wind.speed + ' m/s';
 
-    humidityRateEl.text(val.list[0].main.humidity + '%');
+    humidityRateEl.innerHTML = val.main.humidity + '%';
 
     fiveDayCardsEl.innerHTML('');
 
     
-    for (var i = 7; i <= val.list.length; i += 8) {
+    // for (var i = 7; i <= val.list.length; i += 8) {
 
-        var fiveDays = $("<div>");
-        var fiveDaysWeather = $("<h6>");
-        var fiveDaysTemp = $("<div>");
-        var fiveDaysWind = $("<div>");
-        var fiveDaysHumidity = $("<div>");
-        var fiveDaysPng = $("<img>");
+    //     var fiveDays = $("<div>");
+    //     var fiveDaysWeather = $("<h6>");
+    //     var fiveDaysTemp = $("<div>");
+    //     var fiveDaysWind = $("<div>");
+    //     var fiveDaysHumidity = $("<div>");
+    //     var fiveDaysPng = $("<img>");
     
 
-        fiveDaysWeather.text(val.list[i].dt_txt.slice(0, 10));
+    //     fiveDaysWeather.text(val.list[i].dt_txt.slice(0, 10));
 
-        fiveDaysTemp.text("Temp: " + val.list[i].main.temp + "°C");
+    //     fiveDaysTemp.text("Temp: " + val.list[i].main.temp + "°C");
 
-        fiveDaysWind.text("Wind: " + val.list[i].wind.speed + " m/s");
+    //     fiveDaysWind.text("Wind: " + val.list[i].wind.speed + " m/s");
 
-        fiveDaysHumidity.text("Humidity: " + val.list[i].main.humidity + "%");
+    //     fiveDaysHumidity.text("Humidity: " + val.list[i].main.humidity + "%");
 
 
-        fiveDaysPng.attr({
-          src: `https://openweathermap.org/img/wn/${val.list[i].weather[0].icon}@2x.png`,
-          alt: `${val.list[i].weather[0].description}`});
+    //     fiveDaysPng.attr({
+    //       src: `https://openweathermap.org/img/wn/${val.list[i].weather[0].icon}@2x.png`,
+    //       alt: `${val.list[i].weather[0].description}`});
     
 
-        fiveDays.addClass("fiveDayWeather col");
-        fiveDaysWeather.addClass("fiveDayWeatherDate m-2");
-        fiveDaysPng.addClass("fiveDayWeatherPng");
+    //     fiveDays.addClass("fiveDayWeather col");
+    //     fiveDaysWeather.addClass("fiveDayWeatherDate m-2");
+    //     fiveDaysPng.addClass("fiveDayWeatherPng");
     
-        fiveDayCardsEl.append(fiveDays);
-        fiveDays.append(fiveDaysWeather);
-        fiveDays.append(fiveDaysPng);
-        fiveDays.append(fiveDaysTemp);
-        fiveDays.append(fiveDaysWind);
-        fiveDays.append(fiveDaysHumidity);
-      }
+    //     fiveDayCardsEl.append(fiveDays);
+    //     fiveDays.append(fiveDaysWeather);
+    //     fiveDays.append(fiveDaysPng);
+    //     fiveDays.append(fiveDaysTemp);
+    //     fiveDays.append(fiveDaysWind);
+    //     fiveDays.append(fiveDaysHumidity);
+    //   }
 }
 
 // Put all searches into Local storage and add new buttons under search history with searched city's name
-var previousSearches = JSON.parse(localStorage.getItem('Previous Searches'));
+var previousSearches = JSON.parse(localStorage.getItem('previous_searches'));
 
-for (i = 0; i < previousSearches.length; i++) {
+if (previousSearches != null){
+  for (i = 0; i < previousSearches.length; i++) {
 
-  if (previousSearches[i]) {
-    globalBtn.text(previousSearches[i]);
-    globalBtn.addClass('searchHistoryBtn');
-    searchHistoryEl.append(globalBtn);
-    $('.searchHistoryBtn').on('click', searchHistoryBtn);
+    if (previousSearches[i]) {
+      globalBtn.text(previousSearches[i]);
+      globalBtn.addClass('searchHistoryBtn');
+      searchHistoryEl.append(globalBtn);
+      $('.searchHistoryBtn').on('click', searchHistoryBtn);
+    }
   }
 }
+
 
 // Function to save search history
 function saveSearchHistory(desiredCity) {
 
+  console.log(previousSearches);
+  if(previousSearches != null) {
     previousSearches.unshift(desiredCity);
-    localStorage.setItem('Previous Searches', JSON.stringify(previousSearches));
+    localStorage.setItem('previous_searches', JSON.stringify(previousSearches));
     globalBtn.text(desiredCity);
     globalBtn.addClass('searchHistoryBtn');
     searchHistoryEl.prepend(globalBtn);
     $('.searchHistoryBtn').on('click', searchHistoryBtn);
+  }
   }
 
   // function to retrieve data from previously searched cities
@@ -144,4 +148,5 @@ function saveSearchHistory(desiredCity) {
         weatherData(result); });
   }
 
-  searchBtnEl.on('click', searchFunction);
+  console.log(searchBtnEl);
+  searchBtnEl.addEventListener('click', searchFunction);
