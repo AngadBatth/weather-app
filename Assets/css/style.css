@@ -12,6 +12,10 @@
     border: solid black 5px;
 }
 
+#searchBtn {
+    margin-top: 10px;
+}
+
 #searchHistory {
     margin-top: 20px;
 }

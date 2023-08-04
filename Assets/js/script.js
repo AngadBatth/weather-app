@@ -11,14 +11,14 @@ var humidityRateEl = document.querySelector('#humidityRate');
 var fiveDayCardsEl = document.querySelector('#fiveDayCards');
 var searchHistoryEl = document.querySelector('#searchHistory');
 var searchBtnEl = document.querySelector('#searchBtn');
-var globalBtn = $('<button>');
+var globalBtn = document.createElement('button');
 
 // function to actually search the city's weather
 function searchFunction() {
 
     saveSearchHistory(cityEnteredEl.value);
   
-    if (!cityEnteredEl.value) {alert('Invalid Input');} 
+    if (!cityEnteredEl.value) {alert('Please enter a valid city');} 
     else {
       cityData(cityEnteredEl.value)
         .then(function (data) {
@@ -65,7 +65,7 @@ function weatherData(val) {
 
     humidityRateEl.innerHTML = val.main.humidity + '%';
 
-    fiveDayCardsEl.innerHTML('');
+    fiveDayCardsEl.innerHTML = '';
 
     
     // for (var i = 7; i <= val.list.length; i += 8) {
@@ -148,5 +148,4 @@ function saveSearchHistory(desiredCity) {
         weatherData(result); });
   }
 
-  console.log(searchBtnEl);
   searchBtnEl.addEventListener('click', searchFunction);
