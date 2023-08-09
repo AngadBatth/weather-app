@@ -11,13 +11,13 @@ This is a weather app created using HTML, CSS, Bootstrap 5 and jQuery. The user 
 <br />
 
 ## What was learned?
-While working on this I learned how to use Bootstrap framework to easily create a very fluid designed webpage. I had also learned how to dynamically create buttons for search history using the Local Storage values from the user.
+While working on this I learned how to use a third party API and retrieve data using user inputs. In this case we are using the OpenWeatherMapAPI to retrieve weather data for a given city. You can see the info recieved from the API by Inspecting Element on the webpage and navigating to the Console once a search is made.
 <br />
 
 ## Website
 [The link to the deployed webpage can be found here](https://angadbatth.github.io/weather-app/)
 
-![Sample of Website](./Assets/images/website.png)
+![Sample of Website](./Assets/images/homepage.jpg)
 <br />
 
 ## Credits

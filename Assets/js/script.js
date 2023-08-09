@@ -53,12 +53,6 @@ function weatherData(val) {
 
     cityNameEl.innerHTML = val.name;
 
-    // weatherConditionEl.setAttribute({
-
-    //     src: `https://openweathermap.org/img/wn/${val.weather.icon}@2x.png`,
-    //     alt: `${val.weather.description}`});
-
-
     temperatureEl.innerHTML = val.main.temp + '°C';
 
     windConditionEl.innerHTML = val.wind.speed + ' m/s';
@@ -66,43 +60,6 @@ function weatherData(val) {
     humidityRateEl.innerHTML = val.main.humidity + '%';
 
     fiveDayCardsEl.innerHTML = '';
-
-    
-    // for (var i = 7; i <= val.list.length; i += 8) {
-
-    //     var fiveDays = $("<div>");
-    //     var fiveDaysWeather = $("<h6>");
-    //     var fiveDaysTemp = $("<div>");
-    //     var fiveDaysWind = $("<div>");
-    //     var fiveDaysHumidity = $("<div>");
-    //     var fiveDaysPng = $("<img>");
-    
-
-    //     fiveDaysWeather.text(val.list[i].dt_txt.slice(0, 10));
-
-    //     fiveDaysTemp.text("Temp: " + val.list[i].main.temp + "°C");
-
-    //     fiveDaysWind.text("Wind: " + val.list[i].wind.speed + " m/s");
-
-    //     fiveDaysHumidity.text("Humidity: " + val.list[i].main.humidity + "%");
-
-
-    //     fiveDaysPng.setAttribute({
-    //       src: `https://openweathermap.org/img/wn/${val.weather.icon}@2x.png`,
-    //       alt: `${val.weather.description}`});
-    
-
-    //     fiveDays.addClass("fiveDayWeather col");
-    //     fiveDaysWeather.addClass("fiveDayWeatherDate m-2");
-    //     fiveDaysPng.addClass("fiveDayWeatherPng");
-    
-    //     fiveDayCardsEl.append(fiveDays);
-    //     fiveDays.append(fiveDaysWeather);
-    //     fiveDays.append(fiveDaysPng);
-    //     fiveDays.append(fiveDaysTemp);
-    //     fiveDays.append(fiveDaysWind);
-    //     fiveDays.append(fiveDaysHumidity);
-    //   }
 }
 
 // Put all searches into Local storage and add new buttons under search history with searched city's name
